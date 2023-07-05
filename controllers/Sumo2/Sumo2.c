@@ -43,6 +43,7 @@ int main(int argc, char **argv)
   // Field of view in radians
   double fieldOfView = 0.785;
 
+  int IDs[2];
   int counter = 0;
   int flagCounter = 0;
   int endCounter = 0;
@@ -65,14 +66,23 @@ int main(int argc, char **argv)
         printf("Object %d: ID = %d\nChar: %s\n", i, objects[i].id, objects[i].model);
       }
       */
+
+      // follow ID
+      for (int j = 0; j < num_objects; j++)
+      {
+        IDs[j] = objects[j].id;
+      }
       // Search for the blue object
       int blueObjectIndex = -1;
       for (int i = 0; i < num_objects; i++)
       {
-        if (objects[i].id == BLUE_OBJECT_ID || objects[i].id == 330)
+        for (int k = 0; k < 2; k++)
         {
-          blueObjectIndex = i;
-          break;
+          if (objects[i].id == IDs[k])
+          {
+            blueObjectIndex = i;
+            break;
+          }
         }
       }
 
