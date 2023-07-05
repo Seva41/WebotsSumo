@@ -1,0 +1,218 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/23928ebf69af2e5cafa3ca7b9acc8271593948ca/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/23928ebf69af2e5cafa3ca7b9acc8271593948ca/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/MattePaint.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/TireRubber.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/CircleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.18548421577762855 -0.35773005016861126 -0.9152184531048971 5.197846946719436
+  position -0.2571571684976648 -0.4091239731906604 0.25173850821523563
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+CircleArena {
+  radius 7
+  floorAppearance MattePaint {
+  }
+}
+DEF Arena Shape {
+  appearance MattePaint {
+    baseColor 0 0 0
+  }
+  geometry Cylinder {
+    height 0.01
+    radius 4.5
+  }
+}
+Robot {
+  translation 0 0 0.03
+  children [
+    RangeFinder {
+      translation -0.087 0 0.0135649
+      rotation 0 0 1 3.141592653589793
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 1 0 0
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+      name "Rangefinder"
+    }
+    Camera {
+      translation -0.087 0 0.0124308
+      rotation 0 0 1 3.141592653589793
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0 1 0
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.005
+          }
+        }
+      ]
+      name "Camara"
+      recognition Recognition {
+      }
+    }
+    DistanceSensor {
+      translation -0.085 -0.04 0.02
+      rotation 0 0 1 -1.5708
+      children [
+        DEF DistanceSensor Shape {
+          appearance MattePaint {
+            baseColor 0 1 1
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+      name "SensorDistIzq"
+    }
+    DistanceSensor {
+      translation -0.085 0.04 0.02
+      rotation 0 0 1 1.5708
+      children [
+        DEF DistanceSensor Shape {
+          appearance MattePaint {
+            baseColor 0 1 1
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+      name "SensorDistDer"
+    }
+    DEF Cuerpo Shape {
+      appearance MattePaint {
+        baseColor 0 0 1
+      }
+      geometry Box {
+        size 0.18 0.09 0.03
+      }
+    }
+    DEF RuedaDer HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.02 0.053 0
+      }
+      device [
+        PositionSensor {
+          name "SensorPosDer"
+        }
+        RotationalMotor {
+          name "MotorDer"
+        }
+      ]
+      endPoint Solid {
+        translation 0.02 0.053 0
+        rotation 1 0 0 1.5708
+        children [
+          DEF Rueda Shape {
+            appearance TireRubber {
+            }
+            geometry Cylinder {
+              height 0.015
+              radius 0.03
+            }
+          }
+        ]
+        name "SolidRuerdaDer"
+        boundingObject USE Rueda
+        physics DEF Rueda Physics {
+          density -1
+          mass 0.5
+        }
+      }
+    }
+    DEF RuedaIzq HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.02 -0.05 0
+      }
+      device [
+        RotationalMotor {
+          name "MotorIzq"
+        }
+        PositionSensor {
+          name "SensorPosIzq"
+        }
+      ]
+      endPoint Solid {
+        translation 0.02 -0.053 0
+        rotation 1 0 0 1.5707999999999998
+        children [
+          DEF Rueda2 Shape {
+            appearance TireRubber {
+            }
+            geometry Cylinder {
+              height 0.015
+              radius 0.03
+            }
+          }
+        ]
+        name "SolidRuedaIzq"
+        boundingObject USE Rueda2
+        physics USE Rueda
+      }
+    }
+    DEF Ruedita Solid {
+      translation -0.08 0 -0.022
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0.6 0 0
+          }
+          geometry DEF RueditaGeo Sphere {
+            radius 0.007
+          }
+        }
+      ]
+      name "Ruedita"
+      boundingObject USE RueditaGeo
+      physics Physics {
+      }
+    }
+    Emitter {
+      translation 0 0 0.02
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0 1 0
+          }
+          geometry Cone {
+            bottomRadius 0.005
+            height 0.01
+          }
+        }
+      ]
+      name "emisor"
+    }
+  ]
+  name "Sumo"
+  boundingObject USE Cuerpo
+  physics Physics {
+    density -1
+    mass 3
+    centerOfMass [
+      0 0 0
+    ]
+  }
+  recognitionColors [
+    0 0 1
+  ]
+  controller "C_T4"
+}

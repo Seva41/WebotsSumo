@@ -1,0 +1,608 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/23928ebf69af2e5cafa3ca7b9acc8271593948ca/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/23928ebf69af2e5cafa3ca7b9acc8271593948ca/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/MattePaint.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/TireRubber.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/CircleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.37188247060741036 -0.10512408191026586 0.9223081672941275 3.6262875858254042
+  position 7.2786174243357875 4.2206348149634305 8.638725946488723
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+CircleArena {
+  radius 7
+  floorAppearance MattePaint {
+  }
+}
+DEF Arena Solid {
+  children [
+    DEF ArenaShape Shape {
+      appearance MattePaint {
+        baseColor 0 0 0
+      }
+      geometry Cylinder {
+        height 0.01
+        radius 4.5
+      }
+      castShadows FALSE
+    }
+  ]
+  name "Arena"
+  boundingObject USE ArenaShape
+}
+Robot {
+  translation 1.8 0 0.17
+  children [
+    RangeFinder {
+      translation -0.247 1.95937e-17 0.143565
+      rotation 0 0 1 3.141592653589793
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 1 0 0
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "Rangefinder"
+    }
+    Camera {
+      translation -0.247 1.95937e-17 0.142431
+      rotation 0 0 1 3.141592653589793
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0 1 0
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.005
+          }
+          castShadows FALSE
+        }
+      ]
+      name "Camara"
+      recognition Recognition {
+        frameColor 0 0 1
+      }
+    }
+    Camera {
+      translation 0 0 -0.148
+      rotation -0.7071067811865476 0 0.7071067811865476 3.14159
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0 1 0
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.005
+          }
+          castShadows FALSE
+        }
+      ]
+      name "CamaraFin"
+      recognition Recognition {
+        frameColor 1 1 1
+      }
+    }
+    DistanceSensor {
+      translation -0.245 -0.2 0.16
+      rotation 0 0 1 -1.5708
+      children [
+        DEF DistanceSensor Shape {
+          appearance MattePaint {
+            baseColor 0 1 1
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "SensorDistIzq"
+    }
+    DistanceSensor {
+      translation -0.245 0.2 0.16
+      rotation 0 0 1 1.5708
+      children [
+        DEF DistanceSensor Shape {
+          appearance MattePaint {
+            baseColor 0 1 1
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "SensorDistDer"
+    }
+    DistanceSensor {
+      translation -0.255 -6.99997e-08 0.16
+      rotation 0 0 1 -3.1415853071795863
+      children [
+        DEF DistanceSensor Shape {
+          appearance MattePaint {
+            baseColor 0 1 1
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "SensorDistFro"
+    }
+    DEF Cuerpo Shape {
+      appearance MattePaint {
+        baseColor 0 0 1
+      }
+      geometry Box {
+        size 0.5 0.4 0.3
+      }
+      castShadows FALSE
+    }
+    DEF RuedaDer HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.14 0.223 -0.08
+      }
+      device [
+        PositionSensor {
+          name "SensorPosDer"
+        }
+        RotationalMotor {
+          name "MotorDer"
+        }
+      ]
+      endPoint Solid {
+        translation 0.14 0.223 -0.08
+        rotation 1 0 0 1.5708
+        children [
+          DEF Rueda Shape {
+            appearance TireRubber {
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.1
+            }
+            castShadows FALSE
+          }
+        ]
+        name "SolidRuerdaDer"
+        boundingObject USE Rueda
+        physics DEF Rueda Physics {
+          density -1
+          mass 0.5
+        }
+      }
+    }
+    DEF RuedaIzq HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.14 -0.22 -0.08
+      }
+      device [
+        RotationalMotor {
+          name "MotorIzq"
+        }
+        PositionSensor {
+          name "SensorPosIzq"
+        }
+      ]
+      endPoint Solid {
+        translation 0.14 -0.22 -0.08
+        rotation 1 0 0 1.5707999999999998
+        children [
+          DEF Rueda2 Shape {
+            appearance TireRubber {
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.1
+            }
+            castShadows FALSE
+          }
+        ]
+        name "SolidRuedaIzq"
+        boundingObject USE Rueda2
+        physics USE Rueda
+      }
+    }
+    DEF Ruedita Solid {
+      translation -0.21 0 -0.152
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0.6 0 0
+          }
+          geometry DEF RueditaGeo Sphere {
+            radius 0.017
+          }
+          castShadows FALSE
+        }
+      ]
+      name "Ruedita"
+      boundingObject USE RueditaGeo
+      physics Physics {
+      }
+    }
+    DEF EMISOR Emitter {
+      translation 0 0 0.17
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0 1 0
+          }
+          geometry Cone {
+            bottomRadius 0.027
+            height 0.05
+          }
+          castShadows FALSE
+        }
+      ]
+      name "emisor"
+      channel 1
+    }
+    DEF RECEPTOR Receiver {
+      translation 0.05 0 0.15
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 1 0 1
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "receptor"
+      channel 2
+    }
+    DEF Textura Pose {
+      translation 0.251 0 0
+      rotation 0.5773509358554485 0.5773509358554485 0.5773489358556708 2.0944
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "https://pbs.twimg.com/media/EKYu5eIXkAIAdBM.jpg:large"
+              ]
+            }
+          }
+          geometry Plane {
+            size 0.3 0.2
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+  ]
+  name "Sumo"
+  model "Sumo"
+  boundingObject USE Cuerpo
+  physics Physics {
+    density -1
+    mass 3
+    centerOfMass [
+      0 0 0
+    ]
+  }
+  recognitionColors [
+    0 0 1
+  ]
+  controller "Sumo2"
+}
+Robot {
+  translation -2.37 0 0.17
+  rotation 0 0 1 3.14159
+  children [
+    RangeFinder {
+      translation -0.247 1.95937e-17 0.143565
+      rotation 0 0 1 3.141592653589793
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 1 0 0
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "Rangefinder"
+    }
+    Camera {
+      translation -0.247 1.95937e-17 0.142431
+      rotation 0 0 1 3.141592653589793
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0 1 0
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.005
+          }
+          castShadows FALSE
+        }
+      ]
+      name "Camara"
+      recognition Recognition {
+        frameColor 0 0 1
+      }
+    }
+    Camera {
+      translation 0 0 -0.148
+      rotation -0.7071067811865476 0 0.7071067811865476 3.14159
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0 1 0
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.005
+          }
+          castShadows FALSE
+        }
+      ]
+      name "CamaraFin"
+      recognition Recognition {
+        frameColor 1 1 1
+      }
+    }
+    DistanceSensor {
+      translation -0.245 -0.2 0.16
+      rotation 0 0 1 -1.5708
+      children [
+        DEF DistanceSensor Shape {
+          appearance MattePaint {
+            baseColor 0 1 1
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "SensorDistIzq"
+    }
+    DistanceSensor {
+      translation -0.245 0.2 0.16
+      rotation 0 0 1 1.5708
+      children [
+        DEF DistanceSensor Shape {
+          appearance MattePaint {
+            baseColor 0 1 1
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "SensorDistDer"
+    }
+    DistanceSensor {
+      translation -0.255 -6.99997e-08 0.16
+      rotation 0 0 1 -3.1415853071795863
+      children [
+        DEF DistanceSensor Shape {
+          appearance MattePaint {
+            baseColor 0 1 1
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "SensorDistFro"
+    }
+    DEF Cuerpo Shape {
+      appearance MattePaint {
+        baseColor 0 0 1
+      }
+      geometry Box {
+        size 0.5 0.4 0.3
+      }
+      castShadows FALSE
+    }
+    DEF RuedaDer HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.14 0.223 -0.08
+      }
+      device [
+        PositionSensor {
+          name "SensorPosDer"
+        }
+        RotationalMotor {
+          name "MotorDer"
+        }
+      ]
+      endPoint Solid {
+        translation 0.14 0.223 -0.08
+        rotation 1 0 0 1.5708
+        children [
+          DEF Rueda Shape {
+            appearance TireRubber {
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.1
+            }
+            castShadows FALSE
+          }
+        ]
+        name "SolidRuerdaDer"
+        boundingObject USE Rueda
+        physics DEF Rueda Physics {
+          density -1
+          mass 0.5
+        }
+      }
+    }
+    DEF RuedaIzq HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.14 -0.22 -0.08
+      }
+      device [
+        RotationalMotor {
+          name "MotorIzq"
+        }
+        PositionSensor {
+          name "SensorPosIzq"
+        }
+      ]
+      endPoint Solid {
+        translation 0.14 -0.22 -0.08
+        rotation 1 0 0 1.5707999999999998
+        children [
+          DEF Rueda2 Shape {
+            appearance TireRubber {
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.1
+            }
+            castShadows FALSE
+          }
+        ]
+        name "SolidRuedaIzq"
+        boundingObject USE Rueda2
+        physics USE Rueda
+      }
+    }
+    DEF Ruedita Solid {
+      translation -0.21 0 -0.152
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0.6 0 0
+          }
+          geometry DEF RueditaGeo Sphere {
+            radius 0.017
+          }
+          castShadows FALSE
+        }
+      ]
+      name "Ruedita"
+      boundingObject USE RueditaGeo
+      physics Physics {
+      }
+    }
+    DEF EMISOR Emitter {
+      translation 0 0 0.17
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 0 1 0
+          }
+          geometry Cone {
+            bottomRadius 0.027
+            height 0.05
+          }
+          castShadows FALSE
+        }
+      ]
+      name "emisor"
+      channel 1
+    }
+    DEF RECEPTOR Receiver {
+      translation 0.05 0 0.15
+      children [
+        Shape {
+          appearance MattePaint {
+            baseColor 1 0 1
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.01
+          }
+          castShadows FALSE
+        }
+      ]
+      name "receptor"
+      channel 2
+    }
+    DEF Textura Pose {
+      translation 0.251 0 0
+      rotation 0.5773509358554485 0.5773509358554485 0.5773489358556708 2.0944
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "https://pbs.twimg.com/media/EKYu5eIXkAIAdBM.jpg:large"
+              ]
+            }
+          }
+          geometry Plane {
+            size 0.3 0.2
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+  ]
+  name "Contrincante"
+  model "Contrincante"
+  boundingObject USE Cuerpo
+  physics Physics {
+    density -1
+    mass 3
+    centerOfMass [
+      0 0 0
+    ]
+  }
+  recognitionColors [
+    0 0 1
+  ]
+  controller "Sumo2"
+}
+Robot {
+  name "Supervisor"
+  model "Supervisor"
+  controller "supervisor"
+  supervisor TRUE
+}
+Solid {
+  translation -3.33 -4.15 0.29
+  children [
+    Shape {
+      appearance MattePaint {
+        baseColor 0 0 1
+      }
+      geometry DEF Caja Box {
+        size 0.4 0.4 0.4
+      }
+    }
+  ]
+  name "ObjetoPrueba"
+  boundingObject USE Caja
+  physics Physics {
+    density -1
+    mass 0.5
+  }
+  recognitionColors [
+    1 0 1
+  ]
+}
