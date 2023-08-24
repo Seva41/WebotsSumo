@@ -43,6 +43,12 @@ int main(int argc, char **argv)
   // Field of view in radians
   double fieldOfView = 0.785;
 
+  int IDs[2];
+  int counter = 0;
+  int flagCounter = 0;
+  int endCounter = 0;
+  int movement = 0;
+
   while (wb_robot_step(TIME_STEP) != -1)
   {
     // Get the camera image
@@ -60,14 +66,23 @@ int main(int argc, char **argv)
         printf("Object %d: ID = %d\nChar: %s\n", i, objects[i].id, objects[i].model);
       }
       */
+
+      // follow ID
+      for (int j = 0; j < num_objects; j++)
+      {
+        IDs[j] = objects[j].id;
+      }
       // Search for the blue object
       int blueObjectIndex = -1;
       for (int i = 0; i < num_objects; i++)
       {
-        if (objects[i].id == BLUE_OBJECT_ID || objects[i].id == 330)
+        for (int k = 0; k < 2; k++)
         {
-          blueObjectIndex = i;
-          break;
+          if (objects[i].id == IDs[k])
+          {
+            blueObjectIndex = i;
+            break;
+          }
         }
       }
 
@@ -127,6 +142,28 @@ int main(int argc, char **argv)
       }
       else
       {
+        if (flagCounter == 0)
+        {
+          endCounter = counter + 150;
+          movement = endCounter + 100;
+          flagCounter = 1;
+        }
+        if (counter <= endCounter)
+        {
+          wb_motor_set_velocity(M_left, -5);
+          wb_motor_set_velocity(M_right, 5);
+          counter++;
+        }
+        else
+        {
+          while (counter <= movement)
+          {
+            wb_motor_set_velocity(M_left, -4);
+            wb_motor_set_velocity(M_right, -4);
+            counter++;
+          }
+          flagCounter = 0;
+        }
         // If no blue objects are detected, spin
         wb_motor_set_velocity(M_left, -5);
         wb_motor_set_velocity(M_right, 5);
@@ -134,6 +171,28 @@ int main(int argc, char **argv)
     }
     else
     {
+      if (flagCounter == 0)
+      {
+        endCounter = counter + 150;
+        movement = endCounter + 100;
+        flagCounter = 1;
+      }
+      if (counter <= endCounter)
+      {
+        wb_motor_set_velocity(M_left, -5);
+        wb_motor_set_velocity(M_right, 5);
+        counter++;
+      }
+      else
+      {
+        while (counter <= movement)
+        {
+          wb_motor_set_velocity(M_left, -4);
+          wb_motor_set_velocity(M_right, -4);
+          counter++;
+        }
+        flagCounter = 0;
+      }
       // If no blue objects are detected, spin
       wb_motor_set_velocity(M_left, -5);
       wb_motor_set_velocity(M_right, 5);
